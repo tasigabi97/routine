@@ -23,7 +23,11 @@ def main(body_weight_in_kg: int, expected_g_of_protein_per_kg: float, expected_g
         expected_total_g_of_carbohydrate - Ingredient.get_total_carbohydrate(),
         expected_total_g_of_fat - Ingredient.get_total_fat(),
     )
-    remaining_kcal_from_protein, remaining_kcal_from_carbohydrate, remaining_kcal_from_fat = remaining_g_of_protein * 4, remaining_g_of_carbohydrate * 4, remaining_g_of_fat * 9
+    remaining_kcal_from_protein, remaining_kcal_from_carbohydrate, remaining_kcal_from_fat = (
+        max(remaining_g_of_protein, 0) * 4,
+        max(remaining_g_of_carbohydrate, 0) * 4,
+        max(remaining_g_of_fat, 0) * 9,
+    )
     remaining_kcal = remaining_kcal_from_protein + remaining_kcal_from_carbohydrate + remaining_kcal_from_fat
     remaining_protein_kcal_ratio, remaining_carbohydrate_kcal_ratio, remaining_fat_kcal_ratio = (
         remaining_kcal_from_protein / remaining_kcal,

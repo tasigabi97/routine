@@ -11,7 +11,7 @@ goto :finish
 ::
 :nutrition_loop
     python %~dp0\nutrition
-    timeout 1 > nul
+    timeout 3 > nul
     goto :nutrition_loop
 
 :try_install_global_python
@@ -49,5 +49,6 @@ goto :finish
     call :try_install_global_python
     call :try_install_venv_nutrition
     call :nutrition_ci
+    call :nutrition_loop
 :finish
     echo Finished!

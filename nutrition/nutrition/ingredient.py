@@ -6,6 +6,7 @@ class Ingredient:
     max_total_g = 1000
     ingredients: List["Ingredient"] = []
     classes: Set[type] = set()
+    available = False
 
     def __init_subclass__(cls):
         Ingredient.classes.add(cls)
