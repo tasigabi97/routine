@@ -1,7 +1,7 @@
 from . import *
 
 
-class Ingredient:
+class Ingredient(metaclass=IngredientMeta):
     data: Union[Tuple[int, float, float, float], Tuple[float, float, float]] = (0, 0, 0)
     max_total_g = 1000
     ingredients: List["Ingredient"] = []
@@ -86,8 +86,9 @@ class Ingredient:
     def __add__(self, other):
         return other
 
-    def __init__(self, weight_in_g: int) -> None:
+    def __init__(self, weight_in_g: float = 0) -> None:
         self.weight_in_g = weight_in_g
+        type(self).available = True
         self.ingredients.append(self)
         sum_weight = sum([_.weight_in_g for _ in self.ingredients if isinstance(_, type(self))])
         assert sum_weight <= self.max_total_g, f"{sum_weight}g {type(self).__name__} is more than max {self.max_total_g}g."

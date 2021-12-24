@@ -55,4 +55,4 @@ def main(body_weight_in_kg: int, expected_g_of_protein_per_kg: float, expected_g
     print(f"Your remaining calorie ratio is {int(100*remaining_protein_kcal_ratio)}/{int(100*remaining_carbohydrate_kcal_ratio)}/{int(100*remaining_fat_kcal_ratio)} %.")
     print(f"Ingredients with smallest calorie ratio distance:")
     for ingredient in ingredients:
-        print(f"\t{ingredient.__name__}")
+        print(f"\t{ingredient}")
