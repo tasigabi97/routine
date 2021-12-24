@@ -1,3 +1,6 @@
+python_3_6_15
+nutrition/venv
+.idea
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
