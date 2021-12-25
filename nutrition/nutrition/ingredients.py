@@ -43,3 +43,8 @@ class GherkinPenny3_6cm(Ingredient):
 class CoconutOil(Ingredient):
     data = (0, 0, 98)
     max_total_g = 20
+
+
+class Honey(Ingredient):
+    data = (0.4, 76.4, 0)
+    max_total_g = 30
