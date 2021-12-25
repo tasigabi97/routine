@@ -10,7 +10,9 @@ if "%first_param%"=="n" goto :nutrition
 goto :finish
 ::
 :nutrition_loop
+    call %~dp0\nutrition\venv\Scripts\activate.bat
     python %~dp0\nutrition
+    call %~dp0\nutrition\venv\Scripts\deactivate.bat
     timeout 3 > nul
     goto :nutrition_loop
 

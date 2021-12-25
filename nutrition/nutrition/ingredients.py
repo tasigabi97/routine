@@ -6,45 +6,65 @@ class Water(Ingredient):
 
 
 class VeganProteinBU(Ingredient):
-    data = (74, 13, 7.8)
+    available = True
+    macros = (74, 13, 7.8)
     max_total_g = 250
+    cost = (2000, 16000)
 
 
 class CollagenProteinMP(Ingredient):
-    data = (90, 0, 0)
+    macros = (90, 0, 0)
     max_total_g = 50
+    cost = (1000, 10000)
 
 
 class Chia(Ingredient):
-    data = (16.54, 42.12, 30.8)
+    available = True
+    macros = (16.54, 42.12, 30.8)
     max_total_g = 20
+    cost = (100, 375)
 
 
 class Linseed(Ingredient):
-    data = (22.3, 7.7, 36.5)
+    available = True
+    macros = (22.3, 7.7, 36.5)
     max_total_g = 100
+    cost = (500, 600)
 
 
 class RiceWhite(Ingredient):
-    data = (8, 77, 0.5)
+    macros = (8, 77, 0.5)
     max_total_g = 350
+    cost = (1000, 500)
 
 
 class CacaoBellaAldi(Ingredient):
-    data = (23, 10, 11)
+    available = True
+    macros = (23, 10, 11)
     max_total_g = 30
+    cost = (250, 1050)
 
 
 class GherkinPenny3_6cm(Ingredient):
-    data = (0.8, 2.9, 0.1)
+    macros = (0.8, 2.9, 0.1)
     max_total_g = 200
+    cost = (350, 300)
 
 
 class CoconutOil(Ingredient):
-    data = (0, 0, 98)
+    available = True
+    macros = (0, 0, 98)
     max_total_g = 20
+    cost = (1000, 1800)
 
 
 class Honey(Ingredient):
-    data = (0.4, 76.4, 0)
+    macros = (0.4, 76.4, 0)
     max_total_g = 30
+    cost = (500, 1870)
+
+
+class Cashew(Ingredient):
+    macros = (18.22, 30.19, 43.85)
+    max_total_g = 25
+    cost = (500, 3300)

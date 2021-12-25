@@ -56,3 +56,8 @@ def main(body_weight_in_kg: int, expected_g_of_protein_per_kg: float, expected_g
     print(f"Ingredients with smallest calorie ratio distance:")
     for ingredient in ingredients:
         print(f"\t{ingredient}")
+    suggested_ingredients = get_suggested_ingredients(Ingredient.get_available_ingredient_types(), remaining_g_of_protein, remaining_g_of_carbohydrate, remaining_g_of_fat)
+    if suggested_ingredients:
+        print(f"Suggestions:")
+        for _ in suggested_ingredients:
+            print(f"\t{_}")

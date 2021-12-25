@@ -2,7 +2,8 @@ from . import *
 
 
 class Ingredient(metaclass=IngredientMeta):
-    data: Union[Tuple[int, float, float, float], Tuple[float, float, float]] = (0, 0, 0)
+    macros: Union[Tuple[int, float, float, float], Tuple[float, float, float]] = (0, 0, 0)
+    cost = (1, 0.01)
     max_total_g = 1000
     ingredients: List["Ingredient"] = []
     classes: Set[type] = set()
@@ -13,7 +14,12 @@ class Ingredient(metaclass=IngredientMeta):
 
     @classmethod
     def get_portion_and_protein_and_carbohydrate_and_fat(cls) -> Tuple[int, float, float, float]:
-        return tuple(cls.data) if len(cls.data) == 4 else (100, *cls.data)
+        return cls.macros if len(cls.macros) == 4 else (100, *cls.macros)
+
+    @classmethod
+    def get_cost_per_1g(cls) -> float:
+        g, ft = cls.cost
+        return ft / g
 
     @classmethod
     def get_protein_per_1g(cls) -> float:
@@ -86,12 +92,28 @@ class Ingredient(metaclass=IngredientMeta):
     def __add__(self, other):
         return other
 
-    def __init__(self, weight_in_g: float = 0) -> None:
+    def __lt__(self, other) -> bool:
+        return self.weight_in_g < other.weight_in_g
+
+    def __str__(self) -> str:
+        return f"{type(self).__name__}({self.weight_in_g} g)"
+
+    @classmethod
+    def get_total_ingredient_weight_in_g(cls) -> float:
+        return sum([_.weight_in_g for _ in cls.ingredients if isinstance(_, cls)])
+
+    @classmethod
+    def get_unused_ingredient_weight_in_g(cls) -> float:
+        return max(0, cls.max_total_g - cls.get_total_ingredient_weight_in_g())
+
+    def __init__(self, weight_in_g: float = 0, available: bool = True, free: bool = False) -> None:
         self.weight_in_g = weight_in_g
-        type(self).available = True
+        type(self).available = available
+        if free:
+            type(self).cost = (type(self).cost[0], 0)
         self.ingredients.append(self)
-        sum_weight = sum([_.weight_in_g for _ in self.ingredients if isinstance(_, type(self))])
-        assert sum_weight <= self.max_total_g, f"{sum_weight}g {type(self).__name__} is more than max {self.max_total_g}g."
+        total_weight = self.get_total_ingredient_weight_in_g()
+        assert total_weight <= self.max_total_g, f"{total_weight}g {type(self).__name__} is more than max {self.max_total_g}g."
 
     @staticmethod
     def get_total_protein() -> float:
@@ -108,3 +130,7 @@ class Ingredient(metaclass=IngredientMeta):
     @staticmethod
     def get_total_kcal() -> float:
         return sum([_.get_kcal_per_1g() * _.weight_in_g for _ in Ingredient.ingredients])
+
+    @staticmethod
+    def get_available_ingredient_types() -> Set[IngredientMeta]:
+        return {_ for _ in Ingredient.classes if _.available}
