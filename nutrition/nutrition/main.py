@@ -1,6 +1,7 @@
 from . import *
 
 
+@typechecked
 def main(body_weight_in_kg: int, expected_g_of_protein_per_kg: float, expected_g_of_carbohydrate_per_kg: float, expected_g_of_fat_per_kg: float, mode: str) -> None:
     expected_total_g_of_protein, expected_total_g_of_carbohydrate, expected_total_g_of_fat = (
         body_weight_in_kg * expected_g_of_protein_per_kg,

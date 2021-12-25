@@ -41,7 +41,7 @@ class RiceWhite(Ingredient):
 class CacaoBellaAldi(Ingredient):
     available = True
     macros = (23, 10, 11)
-    max_total_g = 30
+    max_total_g = 20
     cost = (250, 1050)
 
 

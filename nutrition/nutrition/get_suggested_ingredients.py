@@ -1,11 +1,12 @@
 from . import *
 
 
+@typechecked
 def get_suggested_ingredients(
     ingredient_types: Set[IngredientMeta], remaining_g_of_protein: float, remaining_g_of_carbohydrate: float, remaining_g_of_fat: float
 ) -> Union[List[Ingredient], None]:
-    solver = Solver.CreateSolver("GLOP")
-    variable_and_ingredient_types = [(solver.NumVar(0, _.get_unused_ingredient_weight_in_g(), _.__name__), _) for _ in ingredient_types if _.get_unused_ingredient_weight_in_g()]
+    solver = Solver.CreateSolver("CBC_MIXED_INTEGER_PROGRAMMING")
+    variable_and_ingredient_types = [(solver.IntVar(0, _.get_unused_ingredient_weight_in_g(), _.__name__), _) for _ in ingredient_types if _.get_unused_ingredient_weight_in_g()]
     inequality_strs = []
     for constraint_type in (
         ">=",
@@ -25,7 +26,7 @@ def get_suggested_ingredients(
                     inequality = inequality + (coefficient * variable)
                     inequality_str += f" + {coefficient} * {variable}"
             remaining_g = max(0, remaining_g)
-            constraint_g = remaining_g if constraint_type == ">=" else remaining_g + 2
+            constraint_g = remaining_g if constraint_type == ">=" else remaining_g + 4
             inequality = inequality >= constraint_g if constraint_type == ">=" else inequality <= constraint_g
             inequality_strs.append(f"{inequality_str} {constraint_type} {constraint_g}")
             solver.Add(inequality)

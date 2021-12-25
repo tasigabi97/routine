@@ -1,6 +1,7 @@
 from . import *
 
 
+@typechecked
 class Ingredient(metaclass=IngredientMeta):
     macros: Union[Tuple[int, float, float, float], Tuple[float, float, float]] = (0, 0, 0)
     cost = (1, 0.01)
@@ -89,6 +90,10 @@ class Ingredient(metaclass=IngredientMeta):
             fat_surplus = 0
         return (protein_surplus * 1) + (carbohydrate_surplus * 1.5) + (fat_surplus * 1.5) + (protein_deficit * 1.7) + (carbohydrate_deficit * 1) + (fat_deficit * 1.5)
 
+    @classmethod
+    def set_free(cls) -> None:
+        cls.cost = (cls.cost[0], 0)
+
     def __add__(self, other):
         return other
 
@@ -106,11 +111,11 @@ class Ingredient(metaclass=IngredientMeta):
     def get_unused_ingredient_weight_in_g(cls) -> float:
         return max(0, cls.max_total_g - cls.get_total_ingredient_weight_in_g())
 
-    def __init__(self, weight_in_g: float = 0, available: bool = True, free: bool = False) -> None:
+    def __init__(self, weight_in_g: int = 0, available: bool = True, free: bool = False) -> None:
         self.weight_in_g = weight_in_g
         type(self).available = available
         if free:
-            type(self).cost = (type(self).cost[0], 0)
+            self.set_free()
         self.ingredients.append(self)
         total_weight = self.get_total_ingredient_weight_in_g()
         assert total_weight <= self.max_total_g, f"{total_weight}g {type(self).__name__} is more than max {self.max_total_g}g."
