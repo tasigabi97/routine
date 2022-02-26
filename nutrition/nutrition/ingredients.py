@@ -51,20 +51,15 @@ class GherkinPenny3_6cm(Ingredient):
     cost = (350, 300)
 
 
-class CoconutOil(Ingredient):
-    available = True
-    macros = (0, 0, 98)
-    max_total_g = 20
-    cost = (1000, 1800)
-
-
-class Honey(Ingredient):
-    macros = (0.4, 76.4, 0)
-    max_total_g = 30
-    cost = (500, 1870)
-
-
 class Cashew(Ingredient):
+    available = True
     macros = (18.22, 30.19, 43.85)
     max_total_g = 25
     cost = (500, 3300)
+
+
+class PecanNut(Ingredient):
+    available = True
+    macros = (9.17, 13.86, 71.97)
+    max_total_g = 25
+    cost = (200, 1700)
